@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const display = document.getElementById('display');
+    let currentInput = '';
+    let operator = '';
+    let previousInput = '';
+
+    function calculate() {
+        if (operator && previousInput && currentInput) {
+            const a = parseFloat(previousInput);
+            const b = parseFloat(currentInput);
+            let result = 0;
+            switch (operator) {
+                case '+':
+                    result = a + b;
+                    break;
+                case '-':
+                    result = a - b;
+                    break;
+                case '*':
+                    result = a * b;
+                    break;
+                case '/':
+                    result = a / b;
+                    break;
+            }
+            display.textContent = result;
+            previousInput = result.toString();
+            currentInput = '';
+            operator = '';
+        }
+    }
+
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const action = button.getAttribute('data-action');
+            const value = button.textContent;
+
+            switch (action) {
+                case 'digit':
+                    currentInput += value;
+                    display.textContent = currentInput;
+                    break;
+                case 'operator':
+                    if (currentInput) {
+                        previousInput = currentInput;
+                        currentInput = '';
+                    }
+                    operator = value;
+                    break;
+                case 'decimal':
+                    if (!currentInput.includes('.')) {
+                        currentInput += value;
+                        display.textContent = currentInput;
+                    }
+                    break;
+                case 'clear':
+                    currentInput = '';
+                    previousInput = '';
+                    operator = '';
+                    display.textContent = '0';
+                    break;
+                case 'equals':
+                    calculate();
+                    break;
+            }
+        });
+    });
+});
+
+    </script>
+    <style>
+        /* styles.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.calculator {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.display {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: right;
+    font-size: 2em;
+    border-bottom: 1px solid #ccc;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1px;
+}
+
+.btn {
+    background-color: #eee;
+    border: none;
+    font-size: 1.5em;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #ddd;
+}
+
+.btn:active {
+    background-color: #ccc;
+}
+
+    </style>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Basic Calculator</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="calculator">
+            <div class="display" id="display">0</div>
+            <div class="buttons">
+                <button class="btn" data-action="clear">C</button>
+                <button class="btn" data-action="operator">/</button>
+                <button class="btn" data-action="operator">*</button>
+                <button class="btn" data-action="operator">-</button>
+                <button class="btn" data-action="operator">+</button>
+                <button class="btn" data-action="decimal">.</button>
+                <button class="btn" data-action="digit">7</button>
+                <button class="btn" data-action="digit">8</button>
+                <button class="btn" data-action="digit">9</button>
+                <button class="btn" data-action="digit">4</button>
+                <button class="btn" data-action="digit">5</button>
+                <button class="btn" data-action="digit">6</button>
+                <button class="btn" data-action="digit">1</button>
+                <button class="btn" data-action="digit">2</button>
+                <button class="btn" data-action="digit">3</button>
+                <button class="btn" data-action="digit">0</button>
+                <button class="btn" data-action="equals">=</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+    </html>
+    
+</body>
+</html>
